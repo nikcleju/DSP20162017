@@ -253,3 +253,81 @@ place is called **the pole-zero plot**
 * Graphical: poles = "x", zeros = "0"
 * CR cannot contain poles
 * Example: at whiteboard
+
+
+## III.3 Inverse Z transform for rational functions
+
+### Methods for computing the Inverse Z Transform
+
+1. Direct evaluation using the Cauchy integral
+
+$$x[n] = \frac{1}{2 \pi j} \oint_C X(z) z^{n-1} dz$$
+
+2. Decomposition as continuous power series 
+
+3. **Partial fraction decomposition**
+
+### Partial fraction decomposition 
+
+Any rational function 
+$$\frac{b_0 + b_1 z^{-1}+ b_2 z{-2} + ... + b_M z^{-M}}{a_0 + a_1 z^{-1}+ a_2 z{-2} + ... + a_N z^{-N}}$$
+can be decomposed in **partial fractions**:
+$$c_0 + c_1 z^{-1} + ... c_{N-M}z^{-(M-N)} + \frac{A_1}{z-p_1} + ...
+\frac{A_N}{z - p_N}$$
+
+* Each pole has a corresponding partial fraction
+* First terms appear  if $M\leq N$
+* Based on linearity, we invert each term separately (simple)
+
+### Procedure for Inverse Z Transform
+
+$$X(z) = \frac{B(z)}{A(z)}$$
+
+1. If $M \geq N$, divide numerator to denominator to obtain the first terms.
+The remaining fraction is $X_1(z) = \frac{B_1(z)}{A(z)}$, with numerator degree
+strictly smaller then denominator
+
+2. In the remaining fraction, eliminate the negative powers of $z$ 
+by multiplying with $z^N$
+
+3. Divide by $z$, 
+$$\frac{X_1(z)}{z} = \frac{B_1(z)}{z A(z)}$$
+
+4. Compute the poles of $\frac{X_1(z)}{z}$ and decompose in partial fractions:
+$$\frac{X_1(z)}{z} = \frac{A_1}{z - p_1} + ...$$
+
+### Procedure for Inverse Z Transform
+
+5. Multiply back with $z$:
+$${X_1(z)} = A_1 \frac{z}{z - p_1} + ...$$
+
+6. Convert each term back to the time domain
+
+### Computation of partial fractions coefficients
+
+* If all poles are distinct:
+$$A_k = (z-p_k)\frac{X(z)}{z} \rvert_{z = p_k}$$
+
+* If poles are in complex conjugate pairs
+    * group the two fractions into a single fraction of degree 2
+
+* If there exist **$m$ multiple poles of same value** (pole order $m > 1$):
+
+$$ \frac{A_{1k}}{z-p_k} + \frac{A_{k}}{(z-p_k)^2} + ... + \frac{A_{mk}}{(z-p_k)^m} $$
+
+$$A_{ik} = \frac{1}{(m-i)!} \frac{d^{m-i}}{dz^{m-i}} \left[ (z-p_k)^m \cdot \frac{X(z)}{z} \right] \rvert_{z=p_k}$$
+
+    * example for m = 2
+
+
+
+
+
+
+
+
+
+
+
+### Position of poles and time behaviour
+
