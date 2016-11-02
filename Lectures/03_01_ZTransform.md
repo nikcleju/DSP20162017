@@ -135,7 +135,7 @@ Proof: by definition
 #### 5. Derivative of Z transform
 
 If $x[n] \trZ X(z)$ with CR, then:
-$$ n x[n] \trZ \frac{dX \left( z \right)}{dz}$$
+$$ n x[n] \trZ -z \frac{dX \left( z \right)}{dz}$$
 with same CR
 
 Proof: by derivating the difference
@@ -169,6 +169,11 @@ $$ x^*[n] \trZ X^* \left( z^* \right)$$
 with same CR except $z=0$.
 
 Proof: apply definition
+
+#### Consequence
+If $x[n]$ is a real signal, the poles / zeroes are either real or in 
+complex pairs
+
 
 
 ### Properties of Z transform
@@ -313,21 +318,160 @@ $$A_k = (z-p_k)\frac{X(z)}{z} \rvert_{z = p_k}$$
 
 * If there exist **$m$ multiple poles of same value** (pole order $m > 1$):
 
-$$ \frac{A_{1k}}{z-p_k} + \frac{A_{k}}{(z-p_k)^2} + ... + \frac{A_{mk}}{(z-p_k)^m} $$
+$$ \frac{A_{1k}}{z-p_k} + \frac{A_{2k}}{(z-p_k)^2} + ... + \frac{A_{mk}}{(z-p_k)^m} $$
 
 $$A_{ik} = \frac{1}{(m-i)!} \frac{d^{m-i}}{dz^{m-i}} \left[ (z-p_k)^m \cdot \frac{X(z)}{z} \right] \rvert_{z=p_k}$$
 
     * example for m = 2
 
+### Real signals and complex poles/zeros
+
+* Consequence of the complex-conjugate property of Z transform:
+
+* A real signal $x[n]$ can have only 
+    * real poles or zeroes 
+    * complex poles and zeroes in conjugate pairs, which can
+    be grouped into a single term of degree 2, with real coefficients
+
+* If a Z transform has a complex pole / zero without its conjugate pair,
+then the corresponding signal $x[n]$ is complex
 
 
+### Position of poles and time behaviour - 1 pole
+
+* Consider a Z transform with **1 pole**, analyze the look of the
+corresponding signal
+
+* Consider the pole value is **$a$**
+    * Consider only real signals $x[n]$  ---> $a$ is real
+    * Consider causal signal $x[n$ ---> CR is $|z| > |a|$
+
+* Therefore the Z transform is of the type:
+
+$$ X(z) = \frac{1}{1 - a z^{-1}} = \frac{z}{z - a}, CR: |z| > |a|$$
+
+* Therefore the signal $x[n]$ is of the type:
+
+$$x[n] = a^n u[n]$$
+
+### Position of poles and time behavior - 1 pole
+
+Scenarios for a single real pole in $a$:
+
+* Pole inside the unit circle ($|a| < 1$) --> exponential decreasing signal
+* Pole outside the unit circle ($|a| > 1$) --> exponential increasing signal
+* Pole exactly on unit circle ($|a| = 1$) --> not increasing, not decreasing
+* Negative pole ($a < 0$)--> alternating signal
+* Positive value ($a > 0$) --> non-alternating signal
+
+### Position of poles and time behavior - 1 pole
+
+![Signal behavior for 1 pole](img/1PoleSignalBehavior.png)
 
 
+### Position of poles and time behavior - 1 double pole
+
+$$X(z) = \frac{a z^{-1}}{(1 - a z ^{-1})^2}, CR: |z| > |a|$$
+$$x[n] = n a^n u[n]$$
+
+A double pole in $a$:
+
+* Pole inside the unit circle ($|a| < 1$) --> decreasing signal
+* Pole outside the unit circle ($|a| > 1$) --> increasing signal
+* Pole exactly on unit circle ($|a| = 1$) --> **increasing signal**
+* Negative pole ($a < 0$)--> alternating signal
+* Positive value ($a > 0$) --> non-alternating signal
+
+### Position of poles and time behavior - 1 double pole
+
+![Signal behavior for 1 double pole](img/1DoublePoleSignalBehavior.png)
 
 
+### Position of poles and time behavior - conjugate poles
+
+$$X(z) = \frac{1 - a z^{-1} \cos{\omega_0}}{1 - 2 z ^{-1} \cos{\omega_0} + z^{-2}}, CR: |z| > |a|$$
+$$x[n] = n a^n u[n]$$
+
+A pair of complex conjugate poles:
+
+* a sinusoidal with exponential envelope
+    * phase of poles --> frequency of sinusoidal signal
+    * modulus of poles --> exponential envelope 
+    * poles inside unit circle --> decreasing signal
+    * poles outside unit circle --> increasing signal
+    * poles on unit circle --> oscillating signal, constant amplitude
 
 
+What if poles are double?
+
+    * poles on unit circle --> increasing signal
+    * otherwise similar
+
+### Position of poles and time behavior - conjugate poles
+
+![Signal behavior for 1 double pole](img/1ComplexPairPolesSignalBehavior.png)
 
 
-### Position of poles and time behaviour
+### Position of poles and time behavior
 
+* A Z transform can be decomposed into partial fractions, i.e. separate poles
+
+* Analyzing the individual behavior of poles --> tells something about whole signal
+
+* Conclusions (for real signals, causal):
+    * **all poles inside unit circle --> bounded signal**
+    * *simple* poles on unit circle --> bounded signal
+    * otherwise --> unbounded signal
+    * poles inside unit circle, closer to origin --> fast decrease of signal
+    * poles inside unit circle, closer to unit circle --> slow decrease of signal
+
+
+### System function of a LTI system
+
+* Considering a LTI system with $h[n]$, input signal $x[n]$ --> output is convolution
+
+$$y[n] = x[n] * h[n]$$
+
+* In Z transform, convolution = product of transforms
+
+$$Y(z) = X(z) \cdot H(z)$$
+
+* **The system function of a LTI system is the Z transform of the impulse response $h[n]$**
+
+* The system function of a LTI system is:
+
+$$H(z) = \frac{Y(z)}{X(z)}$$
+
+
+### System function and the difference equation
+
+* Any LTI system is characterized by a **difference equation**:
+
+$$\begin{split}
+y[n]
+=& -\sum_{k=1}^N a_k y[n-k] + \sum_{k=0}^M b_k x[n-k] \\
+=& -a_1 y[n-1] - a_2 y[n-2] -... - a_N y[n-N] + b_0 x[n] + b_1 x[n-1] + ... + b_M x[n-M]
+\end{split}$$
+
+or
+
+$$y[n] + \sum_{k=1}^N a_k y[n-k] = \sum_{k=0}^M b_k x[n-k]$$
+$$y[n] + a_1 y[n-1] + a_2 y[n-2] +... + a_N y[n-N] = b_0 x[n] + b_1 x[n-1] + ... + b_M x[n-M]$$
+
+### System function and the difference equation
+
+* The system function $H(z)$ can be derived directly from the difference equation:
+$$Y(z) \left( 1 + \sum_{k=1}^N a_k z^{-k} \right) = X(z) \left( \sum_{k=0}^M b_k z^{-k} \right)$$
+$$H(z) = \frac{Y(z)}{X(z)} =  \frac{ \sum_{k=0}^M b_k z^{-k} }{ 1 + \sum_{k=1}^N a_k z^{-k} }$$
+
+### Particular cases of system functions
+
+* FIR systems: $a_k = 0$
+    * has only zeroes, no poles (all-zero system)
+$$H(z) = \frac{Y(z)}{X(z)} = \sum_{k=0}^M b_k z^{-k}$$
+
+* All-pole system: $b_k = 0, k \geq 1$ (must have at least $b_0 \neq 0)$
+    * has only poles
+$$H(z) = \frac{Y(z)}{X(z)} =  \frac{ b_0 }{ 1 + \sum_{k=1}^N a_k z^{-k} }$$
+
+* Othwerise, in general, we have a *pole-zero system*, with both poles and zeroes
