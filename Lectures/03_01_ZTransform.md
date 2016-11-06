@@ -471,7 +471,7 @@ y[n]
 
 or
 
-$$y[n] + \sum_{k=1}^N a_k y[n-k] = \sum_{k=0}^M b_k x[n-k]$$
+$$y[n] + \sum_{k=1}^n a_k y[n-k] = \sum_{k=0}^m b_k x[n-k]$$
 $$y[n] + a_1 y[n-1] + a_2 y[n-2] +... + a_N y[n-N] = b_0 x[n] + b_1 x[n-1] + ... + b_M x[n-M]$$
 
 ### System function and the difference equation
@@ -490,13 +490,14 @@ $$H(z) = \frac{Y(z)}{X(z)} = \sum_{k=0}^M b_k z^{-k}$$
     * has only poles
 $$H(z) = \frac{Y(z)}{X(z)} =  \frac{ b_0 }{ 1 + \sum_{k=1}^N a_k z^{-k} }$$
 
-* Othwerise, in general, we have a *pole-zero system*, with both poles and zeroes
+* Otherwise, in general, we have a *pole-zero system*, with both poles and zeroes
 
 
-### Computing the system output, no initial conditions
+### Output of the system, no initial conditions
 
-* Consider a LTI system with initial conditions  = 0 (relaxed system)
-    * Remember: I.C. are relevant for IIR implementations ($y[n-k$), not FIR
+* Consider a causal LTI system with initial conditions  = 0 (relaxed system)
+    * Remember: I.C. are relevant for IIR implementations ($y[n-k$ part),
+    not FIR
 
 * Input signal:
 $$x[n] \trZ X(z) = \frac{N(z)}{Q(z)}$$
@@ -505,4 +506,127 @@ $$x[n] \trZ X(z) = \frac{N(z)}{Q(z)}$$
 $$h[n] \trZ H(z) = \frac{B(z)}{A(z)}$$
 
 * Output signal:
-$$x[n] * h[n] \trZ X(z)H(z) = \frac{N(z)B(z)}{Q(z)A(z)}$$
+$$y[n] = x[n] * h[n] \trZ Y(z) = X(z)H(z) = \frac{N(z)B(z)}{Q(z)A(z)}$$
+
+* Some poles and zeros might simplify, if exactly identical
+
+### Natural and forced response
+
+* Assume all poles are *simple* (i.e. no multiplicity)
+* Assume all poles $\neq$ all zeros, so no simplification
+
+* Call the poles of $X(z)$ $q_i$ and the poles of $H(z)$, $p_i$
+
+* Then 
+$$Y(z) = \sum_{k=1}^N \frac{A_k}{1-p_k z^{-1}} + \sum_{k=1}^L \frac{Q_k}
+{1-q_k z^{-1}} $$
+
+and $y[n]$ is
+
+$$y[n] = \underbrace{\sum_{k=1}^N A_k (p_k)^n u[n]}_{natural \; response} + 
+\underbrace{\sum_{k=1}^L Q_k (q_k)^n u[n]}_{forced \; response}$$
+
+### Natural and forced response
+
+* Natural response $y_{nr}[n]$ = the part given by the poles **of the system**
+* Forced response $y_{fr}[n]$ = given by the poles **of the input signal**
+
+* This output is the **zero-state response** of the system (no initial conditions)
+
+* If some poles have higher multiplicity, the formulas will be slightly changed
+
+### Output of the system, with initial conditions 
+
+* The input signal is causal and applied at moment $n=0$
+* The output signal is causal and is computed starting from $n=0$
+* We have initial conditions $y[-1], y[-2], ... y[n-N]$
+
+* Where do initial condition appear in the Z transform?
+
+### Unilateral Z transform
+
+* Initial conditions appear here
+
+$$y[n] \trZ Y(z) = \sum_{n=0}^{\infty} y[n] z^{-n}$$
+$$\begin{split}
+y[n-k] \trZ &\sum_{n=0}^{\infty} y[n-k] z^{-n} = \\
+=&\sum_{m=-k}^{\infty} y[m] z^{-m-k}\\
+=&z^{-k}(\sum_{m=0}^{\infty} y[m] z^{-m} + \sum_{m=1}^k y[-m]z^m)\\
+=&\underbrace{z^{-k}Y(z)}_{normal} + z^{-k}\sum_{n=1}^k \underbrace{y[-n]}_{I.C.} z^n
+\end{split}$$
+
+* This is known as the *unilateral Z transform*, shifting in time
+
+### Output of the system
+
+* Replacing this in the system's difference equation
+$$y[n] + \sum_{k=1}^n a_k y[n-k] = \sum_{k=0}^m b_k x[n-k]$$
+yields
+$$Y(z) \left( 1 + \sum_{k=1}^N a_k z^{-k} \right) + \sum_{k=1}^N a_k z^{-k} \sum_{n=1}^k y[-n]z^n = X(z) \left( \sum_{k=0}^M b_k z^{-k} \right)$$
+
+$$Y(z) = \frac{\sum_{k=0}^M b_k z^{-k}}{1 + \sum_{k=1}^N a_k z^{-k}} + 
+\frac{-\sum_{k=1}^N a_k z^{-k} \sum_{n=1}^k y[-n]z^n }{1 + \sum_{k=1}^N a_k z^{-k}}$$
+
+* Therefore
+$$\boxed{Y(z) = H(z) X(z) + \frac{N_0(z)}{A(z)}}$$
+with
+$$N_0(z) = -\sum_{k=1}^N a_k z^{-k} \sum_{n=1}^k y[-n]z^n $$
+
+### Zero-state and zero-input outputs
+
+* The first part = **zero-state response** (state = initial conditions = 0)
+* The second part = **zero-input response** (when no input)
+
+* Total output = sum of all components
+
+* But zero-input response has the same poles as the system function, so
+$$y_{zi}[n] = \sum_{k=1}^N D_k (p_k)^n u[n]$$
+
+* **Zero-input response is just like natural response, with different coefficients**
+    * The initial conditions just change the coefficients of the system's natural response
+
+### Transient and permanent response
+
+* For a stable system, all system poles $|p_k| < 1$, so natural response (including initial conditions) is made of decreasing exponentials 
+* ** For a stable system, the natural response dies out exponentially**
+* The natural response is called a **transient response**
+
+* Input signals typically last longer, or infinitely (poles on the unit circle) --> the forced response is a **permanent response**
+
+* Operating regimes:
+    * when the input signal is first applied, and the transient response is present, the system is in **transient regime**
+    * When the transient response has died out, the system remains in **permanent regime**, where only the input signal determines the output
+
+
+* Example: apply a infinitely long sinusoidal, starting from $n=0$
+
+
+### Stability of a system and H(z)
+
+* Stable system: bounded input --> bounded output
+
+* Reminder: A system is stable if
+$$\sum |h[n]| < \infty (convergent)$$
+
+* For a stable system, with $H(z)$
+
+$$ |H(z)| \leq \sum |h[n]| \cdot |z^{-n}| \leq \sum |h[n]| < \infty$$
+
+considering $|z|=1$, i.e. **on the unit circle**.
+
+* **A LTI system is stable if the unit circle in inside the Convergence Region**
+    * one can prove the reciprocal, so there is equivalence
+
+* If the system is causal, CR = exterior of a circle given by the largest pole, so all poles must be inside unit circle
+
+* **A *causal* LTI system is stable if all the poles are inside the unit circle**
+
+
+### Stability of a system and H(z)
+
+* Alternative explanation: if one pole is outside unit circle, the term
+corresponding to its partial fraction will be increasing --> whole signal is unbounded
+
+
+
+
