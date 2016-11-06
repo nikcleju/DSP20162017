@@ -337,6 +337,19 @@ $$A_{ik} = \frac{1}{(m-i)!} \frac{d^{m-i}}{dz^{m-i}} \left[ (z-p_k)^m \cdot \fra
 then the corresponding signal $x[n]$ is complex
 
 
+### Position of poles and time behavior
+
+* A rational Z transform $X(z)$ = sum of partial fractions
+
+$\leftarrow$
+
+The signal $x[n]$ is a sum of exponential signals (for each partial fraction / pole)
+
+* In the following, we will analyze the relation between the
+position of the pole and the signal in time
+
+
+
 ### Position of poles and time behaviour - 1 pole
 
 * Consider a Z transform with **1 pole**, analyze the look of the
@@ -426,6 +439,9 @@ What if poles are double?
     * poles inside unit circle, closer to unit circle --> slow decrease of signal
 
 
+
+## III.4 LTI systems and the Z Transform
+
 ### System function of a LTI system
 
 * Considering a LTI system with $h[n]$, input signal $x[n]$ --> output is convolution
@@ -475,3 +491,18 @@ $$H(z) = \frac{Y(z)}{X(z)} = \sum_{k=0}^M b_k z^{-k}$$
 $$H(z) = \frac{Y(z)}{X(z)} =  \frac{ b_0 }{ 1 + \sum_{k=1}^N a_k z^{-k} }$$
 
 * Othwerise, in general, we have a *pole-zero system*, with both poles and zeroes
+
+
+### Computing the system output, no initial conditions
+
+* Consider a LTI system with initial conditions  = 0 (relaxed system)
+    * Remember: I.C. are relevant for IIR implementations ($y[n-k$), not FIR
+
+* Input signal:
+$$x[n] \trZ X(z) = \frac{N(z)}{Q(z)}$$
+
+* Impulse response / System function:
+$$h[n] \trZ H(z) = \frac{B(z)}{A(z)}$$
+
+* Output signal:
+$$x[n] * h[n] \trZ X(z)H(z) = \frac{N(z)B(z)}{Q(z)A(z)}$$
