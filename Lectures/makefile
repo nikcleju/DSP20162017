@@ -1,19 +1,20 @@
 PANDOC = pandoc
 IFORMAT = markdown
 
-pdf: 
+nbpdf: 
 	jupyter nbconvert 0*.ipynb --to pdf
 	mv *.pdf export_pdf
 
-slides:
+nbslides:
 	jupyter nbconvert 0*.ipynb --to slides
 	mv *.html export_html
 
-pdfslides: 
+mdpdf3: 
 	$(PANDOC) -s -f $(IFORMAT)+latex_macros -t beamer -o 03_01_ZTransform.pdf --slide-level 3 --include-in-header macros.md  03_01_ZTransform.md
+
+mdpdf: 
+	$(PANDOC) -s -f $(IFORMAT)+latex_macros -t beamer -o 04_FrequencyAnalysisOfDiscreteSignals.pdf --slide-level 3 --include-in-header macros.md  04_FrequencyAnalysisOfDiscreteSignals.md
 	
-testpdfslides: 
-	$(PANDOC) -s -f $(IFORMAT)+latex_macros -t beamer -o 03_01_ZTransform.pdf --slide-level 3 03_01_ZTransform.md
 
 filterout=02_SignalsAndSystems.ipynb
 infiles := $(wildcard *.ipynb)
