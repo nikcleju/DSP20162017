@@ -151,7 +151,7 @@ $$-\pi < \omega_k \leq \pi$$
 ### Basic properties of Fourier coefficients
 
 1. Signal is **discrete** --> coefficients are **periodic** with period N
-$$c_{k+N} = \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{- j 2 \pi (k+N) n} = \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{- j 2 \pi k n}$$
+$$c_{k+N} = \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{- j 2 \pi (k+N) n / N} = \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{- j 2 \pi k n / N}$$
 
 2. If signal is real $x[n] \in \mathbb{R}$, the coefficients are **even**:
     * $c_k^* = c_{-k}$
@@ -183,7 +183,7 @@ $$P = \frac{1}{N} \sum_{n=0}^{N-1}|x[n]|^2$$
 $$P = \sum_{k=0}^{N-1} |c_k|^2$$
 
 * Power spectral density of the signal is
-$$S_xx[k] = |c_k|^2$$
+$$S_{xx}[k] = |c_k|^2$$
 
 * Energy over one period is
 $$E = \sum_{n-0}^{N-1} |x[n]|^2 = N \sum_{k-0}^{N-1} |c_k|^2$$
@@ -225,16 +225,16 @@ Proof: via definition
 ####  2. Shifting in time
 
 If $x[n] \leftrightarrow \lbrace c_k \rbrace$, then
-$$x[n - n_0] \leftrightarrow \lbrace e^{(-j 2 \pi k n_0 / N) c_k }\rbrace$$
+$$x[n - n_0] \leftrightarrow \lbrace e^{(-j 2 \pi k n_0 / N)} c_k \rbrace$$
 
 Proof: via definition
 
-* The amplitudes $|c_k|$ is not affected, shifting in time affects only the phase
+* The amplitudes $|c_k|$ are not affected, shifting in time affects only the phase
 
 ### Properties of Fourier series
 
 #### 3. Modulation in time
-$$e^{(j 2 pi k_0 n / N} \leftrightarrow \lbrace c_{k-k_0} \rbrace$$
+$$e^{j 2 \pi k_0 n / N} \leftrightarrow \lbrace c_{k-k_0} \rbrace$$
 
 #### 4. Complex conjugation
 
@@ -264,4 +264,169 @@ $$x_1[n] \cdot  x_2[n] \leftrightarrow \sum_{m=0}^{N-1} c_m^{(1)} c_{(k-m)_N}^{(
 
 
 ### Fourier transform of discrete non-periodical signals
+
+* Non-periodical signals contain all frequencies, not only the multiples of $f_0$
+
+* The Fourier transform of a discrete signal:
+$$X(\omega) = \sum_{n=-\infty}^\infty x[n] e^{-j \omega n}$$
+
+* The inverse Fourier transform:
+$$x[n] = \frac{1}{2 \pi} \int_{-\pi}^\pi X(\omega) e^{j \omega n} d\omega$$
+
+### Comparison
+
+* Compared with the Fourier transform of analog signals
+    * sum instead of integral in Fourier transform
+    * spectrum is only in range:
+    $$\omega \in [-\pi, \pi]$$
+    $$f \in [-\frac{1}{2}, \frac{1}{2}]$$
+
+* Compared with the Fourier series of discrete periodical signals
+    * general $\omega$ instead of $2 \pi k f_0$
+    * spectrum is continuous, not discrete 
+    * integral, not sum  in inverse Fourier transform
+
+### Parseval theorem
+
+* **Parseval theorem**: energy of the signal is the same in time and frequency domains
+$$E = \sum_{-\infty}^\infty |x[n]|^2 = \frac{1}{2 \pi}\int_{-\pi}^\pi |X(\omega)|^2$$
+
+* Proof: on whiteboard
+
+* The **energy spectral density** gives the energy contained for each frequency
+$$S_{xx}(\omega) = |X(\omega)|^2$$
+
+### Basic properties of Fourier transform
+
+* It is **periodical** with period $2 \pi$
+$$X(\omega + 2 \pi) = X(\omega)$$
+
+* If the signal $x[n]$ is real, the Fourier transform is **even**
+$$x[n] \in \mathbb{R} \rightarrow X^*(\omega) = X(-\omega)$$
+
+* This means
+    * modulus is even: $|X(\omega)| = |X(-\omega)|$
+    * phase is odd: $X(\omega) = - X(-\omega)$
+
+### Convergence of the Fourier transform
+
+* When are the relations valid?
+
+* Assume we compute the Fourier transform with only $2M+1$ samples:
+$$X_M(\omega) = \sum_{-M}^M x[n] e^{- j \omega n}$$
+
+* If a signal $x[n]$ is **absolutely summable**:
+$$\sum_{\infty}^\infty |x[n]| < \infty$$
+
+* then the Fourier series  is **uniform convergent** for every $\omega$ (OK):
+$$\lim_{M \to \infty} X(\omega) - X_M(\omega) = 0$$
+
+### Convergence for square-summable signals
+
+* Signals that are only **square summable**
+$$\sum_{\infty}^\infty |x[n]|^2 < \infty$$
+
+* have a weaker convergence:
+$$\lim_{M \to \infty} \int_{-\pi}^\pi |X(\omega) - X_M(\omega)|^2 d\omega = 0$$
+
+### The Gibbs phenomenon
+
+* When $H(\omega)$ **has discontinuities**, then $h[n]$ is **not** absolutely summable, only square summable
+
+* Problem: if we only use $M$ samples, even if $M$ is very large, we will
+obtain **small oscillations around the discontinuity**
+
+* As $M \to \infty$, the oscillations do not become smaller, but thinner --> they don't go away!
+
+* The Fourier transform will always *overshoot* with about 9% below and above 
+
+* Known as the **Gibbs phenomenon**
+
+### Gibbs phenomenon
+
+<<term=True, evaluate=False, echo=False>>=
+import numpy as np
+from scipy.fftpack import fft, ifft
+import matplotlib.pylab as plt
+omegac = np.pi / 4
+n = np.arange(100)
+x = omegac / np.pi * np.sinc(omegac * n)
+y = 1.0/100 * fft(x,1000)
+y
+plt.plot(np.abs(y))
+@
+
+![Gibbs phenomenon](img/Gibbs.png "Gibbs phenomenon")
+
+### Relation between Fourier series and Fourier transform
+
+* If apply Fourier transform to periodical discrete signals, $X(\omega)$ 
+contains Diracs
+* The Diracs are at frequencies $k f_0$, just like the Fourier series
+* The value of an impulse = the coefficient $c_k$ of the Fourier series
+
+* **The Fourier series $\approx$ the Fourier transform of periodic signals**
+    * we directly compute the coefficients $c_k$ of the impulses in the spectrum
+
+### Fourier transform and Z transform
+
+* Definition of Fourier transform = Z transform with:
+$$z = e^{j \omega}$$
+
+* $e^{j \omega}$ = points on the unit circle
+
+* Fourier transform = Z transform evaluated **on the unit circle**
+    * if the unit circle is in the convergence region of Z transform
+    * otherwise, equivalence does not hold
+
+* This is true for most usual signals we work with
+    * there are exceptions, but they are outside the scope of this class
+
+### Properties of Fourier transform
+
+#### 1. Linearity
+
+$$a \cdot x_1[n] + b\cdot x_2[n] \leftrightarrow a \cdot X_1(\omega)+ b\cdot X_2(\omega)$$
+
+Proof: via definition
+
+### Properties of Fourier transform
+
+####  2. Shifting in time
+
+$$x[n - n_0] \leftrightarrow e^{-j \omega n_0} X(\omega)$$
+
+Proof: via definition
+
+* The amplitudes $|X(\omega)|$ is not affected, shifting in time affects only the phase
+
+### Properties of Fourier series
+
+#### 3. Modulation in time
+$$e^{j \omega_0 n} \leftrightarrow X(\omega - \omega_0)$$
+
+#### 4. Complex conjugation
+
+$$x^*[n] \leftrightarrow X^*(-\omega)$$
+
+### Properties of Fourier series
+
+#### 5. Convolution
+
+$$x_1[n] * x_2[n] \leftrightarrow X_1(\omega) \cdot X_2(\omega)$$
+
+* Not circular convolution, this is the normal convolution
+
+### Properties of Fourier series
+
+#### 6. Product in time
+
+Product in time $\leftrightarrow$ convolution of Fourier series coefficients
+$$x_1[n] \cdot  x_2[n] \leftrightarrow \frac{1}{2 \pi} \int_{-\pi}^\pi X_1(\lambda) X_2(\omega - \lambda) d\lambda$$
+
+
+
+
+
+
 
