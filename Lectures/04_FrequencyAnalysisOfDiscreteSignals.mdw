@@ -400,7 +400,7 @@ Proof: via definition
 
 * The amplitudes $|X(\omega)|$ is not affected, shifting in time affects only the phase
 
-### Properties of Fourier series
+### Properties of Fourier transform
 
 #### 3. Modulation in time
 $$e^{j \omega_0 n} \leftrightarrow X(\omega - \omega_0)$$
@@ -409,7 +409,7 @@ $$e^{j \omega_0 n} \leftrightarrow X(\omega - \omega_0)$$
 
 $$x^*[n] \leftrightarrow X^*(-\omega)$$
 
-### Properties of Fourier series
+### Properties of Fourier transform
 
 #### 5. Convolution
 
@@ -417,14 +417,28 @@ $$x_1[n] * x_2[n] \leftrightarrow X_1(\omega) \cdot X_2(\omega)$$
 
 * Not circular convolution, this is the normal convolution
 
-### Properties of Fourier series
+### Properties of Fourier transform
 
 #### 6. Product in time
 
-Product in time $\leftrightarrow$ convolution of Fourier series coefficients
+Product in time $\leftrightarrow$ convolution of Fourier transforms
 $$x_1[n] \cdot  x_2[n] \leftrightarrow \frac{1}{2 \pi} \int_{-\pi}^\pi X_1(\lambda) X_2(\omega - \lambda) d\lambda$$
 
+### Properties of Fourier transform
 
+#### Correlation theorem
+
+$$r_{x_1x_2}[l] \leftrightarrow X_1(\omega) X_2(-\omega)$$
+
+#### Wiener Khinchin theorem
+
+Autocorrelation of a signal $\leftrightarrow$ Power spectral density
+$$r_{xx}[l] \leftrightarrow S_{xx}(\omega) = |X(\omega)|^2$$
+
+### Properties of Fourier transform
+
+#### Parseval theorem
+Energy is the same when computed in the time or frequency domain
 
 
 
