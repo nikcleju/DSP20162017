@@ -428,5 +428,129 @@ $$x_1[n] \cdot  x_2[n] \leftrightarrow \frac{1}{2 \pi} \int_{-\pi}^\pi X_1(\lamb
 
 
 
+### Relationship of Fourier transform and Fourier series
+
+* How are they related?
+    * Fourier transform: for non-periodical signals
+    * Fourier series: for periodical series
+
+* Duality: periodic in time $\leftrightarrow$ discrete in frequency
+
+* If we **periodize** a signal $x[n]$ by repeating with period N:
+$$x_N[n] = \sum_{k=-\infty}^{\infty} x[n - k N]$$
+
+* then the Fourier transform w is discrete (made of Diracs):
+$$X_N(\omega) = 2 \pi c_k \delta(\omega - k \frac{2 \pi}{N})$$
+
+* The coefficients of the Diracs = exactly the Fourier series coefficients
+
+### Relationship of Fourier transform and Fourier series
+
+* So, Fourier transform can be considered for both periodic and non-periodic signals
+
+* Fourier transform for periodic signals = discrete (sum of Diracs with some coefficients)
+    * Diracs at frequencies $f_0 = 1/N$ and its multiplies
+
+* Fourier series for periodic signals = gives the coefficients of the Diracs directly
+    * it just omits to write the Diracs explicitly in the equation
 
 
+### Relation of Fourier transform and Z transform
+
+* Fourier transform: $X(\omega) = \sum_{-\infty}^{\infty}x[n] e^{-j \omega n}$
+* Z transform: $X(z) = \sum_{-\infty}^{\infty}x[n] z^{-n}}$
+
+* **Fourier tranform = Z transform for $z = e^{j \omega}$**
+
+* $z = e^{j \omega}$ means **evaluated on the unit circle**:
+    * $|z| = |e^{j \omega}| = 1 (modulus)$
+    * $\angle{z} = \angle{e^{j \omega}} = \omega (phase)$
+
+
+* Conditions:
+    * unit circle must be in the Convergence Region of Z transform
+    * some signals can have Fourier transform even though unit circle not in CR
+
+* If signal has pole on unit circle --> Dirac (infinite) in Fourier transform 
+    * e.g. $u[n]$
+    * some signals are non-convergent on unit circle, but have Fourier transform (e.g. $u[n]$)
+
+
+### Geometric interpretation of Fourier transform
+
+$$X(z) = C \cdot \frac{(z-z_1)\cdots(z - z_M)}{(z-p_1)\cdots(z - p_N)}$$
+$$X(\omega) = C \cdot \frac{(e^{j \omega}-z_1)\cdots(e^{j \omega} - z_M)}{(e^{j \omega}-p_1)\cdots(e^{j \omega} - p_N)}$$
+
+* Modulus:
+$$|X(\omega)| = C \cdot \frac{|e^{j \omega}-z_1|\cdots|e^{j \omega} - z_M|}{|e^{j \omega}-p_1|\cdots|e^{j \omega} - p_N|}$$
+
+* Phase:
+$$\angle X = \angle C + \angle{e^{j \omega}-z_1} + \cdots + \angle{e^{j \omega} - z_M} - \angle{e^{j \omega}-p_1} - \cdots - \angle{e^{j \omega} - p_N}$$
+
+* For complex numbers:
+    * modulus of $|a - b|$ = the length of the segment between $a$ and $b$
+    * phase of $|a - b|$ = the angle of the segment from $b$ to $a$ (direction is important)
+
+
+* So, for a point on the unit circle $z = e^{j \omega}$
+    * modulus $|X(\omega)|$ is **given by the distances to the zeros and to the poles**
+    * phase $\angle{X(\omega)|$ is **given by the angles from the zeros and poles to z**
+
+
+### Geometric interpretation of Fourier transform
+
+* Consequences:
+    * when a **pole** is very close to unit circle --> Fourier transform is **large** at this point
+    * when a **zero** is very close to unit circle --> Fourier transform is **small** at this point
+
+* Examples:...
+
+* Simple interpretation for modulus $|X(\omega)|$:
+    * Z transform $X(z)$ is a *"landscape"*
+        * poles = mountains of infinite height
+        * zeros = valleys of zero height
+
+    * Fourier transform $X(\omega)$ = *"An ant walks over this landscape along the unit circle*" --> the heights give the Fourier transform 
+
+    * When close to a mountain --> road is high --> Fourier transform has large amplitude
+    * When close to a valley --> road is high --> Fourier transform has small amplitude
+
+* Enough to sketch the Fourier transform for signals with few poles/zeros
+
+### Geometric interpretation of Fourier transform
+
+* Note: $X(z)$ might also have a constant $C$ in front!
+    * It does not appear in pole-zero plot
+    * The value of $|C|$ and $\angle{C}$ must be determined separately
+
+* This "geometric method" can be applied for both modulus and phase
+
+
+### Time-frequency duality
+
+* **Duality** properties related to Fourier transform/series
+
+* Discrete $\leftrightarrow$ Periodic
+    * **discrete** in time --> **periodic** in frequency
+    * **periodic** in time --> **discrete** in frequency
+
+* Continuous $\leftrightarrow$ Non-periodic
+    * **continous** in time --> **non-periodic** in frequency
+    * **non-periodic** in time --> **continuous** in frequency
+
+### Frequency-based classification of signals
+
+* Based on frequency content:
+    * **low-frequency** signals
+    * **mid-frequency** signals (band-pass)
+    * **high-frequency** signals
+
+* **Band-limited** signals: spectrum is 0 over some frequency $f_{max}$
+* **Time-limited** signals: signal value is 0 outside some time interval
+
+* **Bandwitdh** $B$: frequency interval [F_1, F_2] which contains $95\%$ of energy
+    * $B = F_2 - F_1$
+
+* Based on bandwidth $B$:
+    * **Narrow-band** signals: $B << $ central frequency $\frac{F_1 + F_2}{2}$
+    * **Wide-band** signals: not narrow-band
