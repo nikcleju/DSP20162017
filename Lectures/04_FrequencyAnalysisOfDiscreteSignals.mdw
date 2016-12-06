@@ -403,7 +403,7 @@ Proof: via definition
 ### Properties of Fourier transform
 
 #### 3. Modulation in time
-$$e^{j \omega_0 n} \leftrightarrow X(\omega - \omega_0)$$
+$$e^{j \omega_0 n} x[n]\leftrightarrow X(\omega - \omega_0)$$
 
 #### 4. Complex conjugation
 
@@ -440,7 +440,7 @@ $$r_{xx}[l] \leftrightarrow S_{xx}(\omega) = |X(\omega)|^2$$
 #### Parseval theorem
 Energy is the same when computed in the time or frequency domain
 
-
+$$\sum|x[n]|^2 = \frac{1}{2 \pi} \int_{-\pi}^{\pi} |X(\omega)|^2 d\omega$$
 
 ### Relationship of Fourier transform and Fourier series
 
@@ -472,7 +472,7 @@ $$X_N(\omega) = 2 \pi c_k \delta(\omega - k \frac{2 \pi}{N})$$
 ### Relation of Fourier transform and Z transform
 
 * Fourier transform: $X(\omega) = \sum_{-\infty}^{\infty}x[n] e^{-j \omega n}$
-* Z transform: $X(z) = \sum_{-\infty}^{\infty}x[n] z^{-n}}$
+* Z transform: $X(z) = \sum_{-\infty}^{\infty}x[n] z^{-n}$
 
 * **Fourier tranform = Z transform for $z = e^{j \omega}$**
 
@@ -496,10 +496,13 @@ $$X(z) = C \cdot \frac{(z-z_1)\cdots(z - z_M)}{(z-p_1)\cdots(z - p_N)}$$
 $$X(\omega) = C \cdot \frac{(e^{j \omega}-z_1)\cdots(e^{j \omega} - z_M)}{(e^{j \omega}-p_1)\cdots(e^{j \omega} - p_N)}$$
 
 * Modulus:
-$$|X(\omega)| = C \cdot \frac{|e^{j \omega}-z_1|\cdots|e^{j \omega} - z_M|}{|e^{j \omega}-p_1|\cdots|e^{j \omega} - p_N|}$$
+$$|X(\omega)| = |C| \cdot \frac{|e^{j \omega}-z_1|\cdots|e^{j \omega} - z_M|}{|e^{j \omega}-p_1|\cdots|e^{j \omega} - p_N|}$$
 
 * Phase:
-$$\angle X = \angle C + \angle{e^{j \omega}-z_1} + \cdots + \angle{e^{j \omega} - z_M} - \angle{e^{j \omega}-p_1} - \cdots - \angle{e^{j \omega} - p_N}$$
+$$\angle{X} = \angle{C} + \angle (e^{j \omega}-z_1) + \cdots + \angle(e^{j \omega} - z_M) - \angle(e^{j \omega}-p_1) - \cdots - \angle(e^{j \omega} - p_N)$$
+
+
+### Geometric interpretation of Fourier transform
 
 * For complex numbers:
     * modulus of $|a - b|$ = the length of the segment between $a$ and $b$
@@ -508,7 +511,7 @@ $$\angle X = \angle C + \angle{e^{j \omega}-z_1} + \cdots + \angle{e^{j \omega} 
 
 * So, for a point on the unit circle $z = e^{j \omega}$
     * modulus $|X(\omega)|$ is **given by the distances to the zeros and to the poles**
-    * phase $\angle{X(\omega)|$ is **given by the angles from the zeros and poles to z**
+    * phase $\angle{X(\omega)}$ is **given by the angles from the zeros and poles to z**
 
 
 ### Geometric interpretation of Fourier transform
@@ -524,10 +527,10 @@ $$\angle X = \angle C + \angle{e^{j \omega}-z_1} + \cdots + \angle{e^{j \omega} 
         * poles = mountains of infinite height
         * zeros = valleys of zero height
 
-    * Fourier transform $X(\omega)$ = *"An ant walks over this landscape along the unit circle*" --> the heights give the Fourier transform 
+    * Fourier transform $X(\omega)$ = "*Walking over this landscape along the unit circle*" --> the heights give the Fourier transform 
 
     * When close to a mountain --> road is high --> Fourier transform has large amplitude
-    * When close to a valley --> road is high --> Fourier transform has small amplitude
+    * When close to a valley --> road is low --> Fourier transform has small amplitude
 
 * Enough to sketch the Fourier transform for signals with few poles/zeros
 
@@ -562,7 +565,7 @@ $$\angle X = \angle C + \angle{e^{j \omega}-z_1} + \cdots + \angle{e^{j \omega} 
 * **Band-limited** signals: spectrum is 0 over some frequency $f_{max}$
 * **Time-limited** signals: signal value is 0 outside some time interval
 
-* **Bandwitdh** $B$: frequency interval [F_1, F_2] which contains $95\%$ of energy
+* **Bandwitdh** $B$: frequency interval [$F_1$, $F_2$] which contains $95\%$ of energy
     * $B = F_2 - F_1$
 
 * Based on bandwidth $B$:
