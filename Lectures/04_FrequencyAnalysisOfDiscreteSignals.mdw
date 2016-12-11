@@ -1,5 +1,5 @@
 
-# Chapter IV: Frequency Analysis of Discrete Systems
+# Chapter IV: Frequency Analysis of Discrete Signals
 
 ## IV.1 Reminder: Frequency analysis of analog signals
 
