@@ -147,7 +147,7 @@ $$y[n] = C \cdot x[n-n_0]$$
 * = The time delay experienced by a component of frequency $\omega$ when passing through the filter
 
 * **Group delay** of the filter:
-$$\tau_g(\omega) = \frac{d \Theta(\omega)}{d \omega}$$i
+$$\tau_g(\omega) = \frac{d \Theta(\omega)}{d \omega}$$
 
 * Linear phase = constant group delay = all frequencies delayed the same = whole  signal delayed
 
@@ -161,6 +161,24 @@ $$\tau_g(\omega) = \frac{d \Theta(\omega)}{d \omega}$$i
     * e.g. human ears are insensitive to phase distortions of sounds
 
 
+### Filter order
+
+* The **order** of a filter = maximum degree in numerator or denominator of $H(z)$
+    * i.e. largest power of $z$
+
+* Any filter can be implemented, in general, with this number of unit delay blocks ($z^{-1}$)
+
+* Higher order -> better filter transfer function
+    * closer to ideal filter
+    * more complex to implement
+    * more delays (bad)
+
+* Lower order
+    * worse transfer function (not close to ideal)
+    * simpler, cheaper
+    * faster response
+
+
 ### Filter design by pole and zero placements
 
 * Based on geometric method
@@ -168,6 +186,55 @@ $$\tau_g(\omega) = \frac{d \Theta(\omega)}{d \omega}$$i
 * The gain must be found by separate condition
 
 * Examples at blackboard
+
+
+### Linear-phase FIR filters
+
+* Only FIR filters can have linear phase!
+* IIR filters cannot have linear phase (no proof
+
+### Zero-phase transfer function
+
+* Normally, $|H(\omega|$) is strictly positive
+$$|H(\omega)| \geq 0$$
+
+* When $H(\omega)$ the function passes through 0:
+    * $|H(\omega)|$ remains positive
+    * $\angle H(\omega)$ has a jump of $\pi$
+
+* Zero phase transfer function $H(\omega) = H_R(\omega) e^{j \Theta_R(\omega)}$
+    * $H_R(\omega)$ = $\pm |H(\omega)|$, including the sign (can be positive or negative)
+    * $\Theta_R(\omega)$ doesn't have anymore the jumps of $\pi$
+
+* Everything else still applies
+    * $H_R(\omega)$ is even
+    * $\Theta_R(\omega)$ is odd
+
+### Symmetries for linear-phase FIR
+
+* Let filter order be $M$
+
+* The filter coefficients are $h[0]$, ... $h[M-1]$
+
+* Linear-phase is guaranteed in two cases
+
+* **Positive symmetry**
+$$h[n] = h[M-1-n]$$
+
+* **Negative symmetry (anti-symmetry)**
+$$h[n] = -h[M-1-n]$$
+
+### Cases of linear-phase FIR
+
+* Proofs at blackboard
+
+1. Positive symmetry, M = odd
+2. Positive symmetry, M = even
+3. Negative symmetry, M = odd
+4. Negative symmetry, M = even
+
+* Check constraints for $H(0)$ and $H(\pii)$
+* For what types of filters is each case appropriate?
 
 
 ### Particular classes of filters
