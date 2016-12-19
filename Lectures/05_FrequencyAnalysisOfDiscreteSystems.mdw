@@ -233,7 +233,7 @@ $$h[n] = -h[M-1-n]$$
 3. Negative symmetry, M = odd
 4. Negative symmetry, M = even
 
-* Check constraints for $H(0)$ and $H(\pii)$
+* Check constraints for $H(0)$ and $H(\pi)$
 * For what types of filters is each case appropriate?
 
 
