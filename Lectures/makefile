@@ -15,6 +15,9 @@ mdpdf3:
 mdpdf: 
 	$(PANDOC) -s -f $(IFORMAT)+latex_macros -t beamer -o 04_FrequencyAnalysisOfDiscreteSignals.pdf --slide-level 3 --include-in-header macros.md  04_FrequencyAnalysisOfDiscreteSignals.md
 
+mdw2pdf: 
+	pweave -f pandoc 02_SignalsAndSystems.mdw
+	$(PANDOC) -s -f $(IFORMAT)+latex_macros -t beamer -o 02_SignalsAndSystems.pdf --slide-level 3 --include-in-header macros.md  02_SignalsAndSystems.md
 
 mdw4pdf: 
 	pweave -f pandoc 04_FrequencyAnalysisOfDiscreteSignals.mdw
