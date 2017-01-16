@@ -4,7 +4,7 @@ Here you will find all the lectures for the class of Digital Signal Processing w
 
 **Update:** You can view all lectures in PDF in the Lectures folder:
 
-- [Lectures\00_Introduction.pdf](Lectures\00_Introduction.pdf)
+- [Lectures\00_Introduction.pdf](./Lectures\00_Introduction.pdf)
 - [Lectures\01_Sampling.pdf](Lectures\01_Sampling.pdf)
 - [Lectures\02_SignalsAndSystems.pdf](Lectures\02_SignalsAndSystems.pdf)
 - [Lectures\03_01_ZTransform.pdf](Lectures\03_01_ZTransform.pdf)
