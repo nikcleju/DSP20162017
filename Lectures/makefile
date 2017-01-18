@@ -27,6 +27,9 @@ mdw5pdf:
 	pweave -f pandoc 05_FrequencyAnalysisOfDiscreteSystems.mdw
 	$(PANDOC) -s -f $(IFORMAT)+latex_macros -t beamer -o 05_FrequencyAnalysisOfDiscreteSystems.pdf --slide-level 3 --include-in-header macros.md  05_FrequencyAnalysisOfDiscreteSystems.md
 	
+prep:
+	$(PANDOC) -s -f markdown -o ../PreparationForExam.pdf ../PreparationForExam.md
+	
 
 filterout=02_SignalsAndSystems.ipynb
 infiles := $(wildcard *.ipynb)
