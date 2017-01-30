@@ -391,8 +391,6 @@ for i in range(len(x)):
         y[i] = (x[i-1] + x[i])/3.0;   # x[len(x)] does not exist in the vector
     else:
         y[i] = (x[i-1] + x[i] + x[i+1])/3.0;
-print 'x = ',x
-print ('y = ['+', '.join(['%.2f']*len(y))%tuple(y)+']')
 plt.figure(figsize=(10,4));
 plt.subplot(2,1,1); plt.stem(x); plt.title ('Input $x[n]$'); plt.axis([0,8,0,5])
 plt.subplot(2,1,2); plt.stem(y); plt.title ('Output $y[n]$'); plt.axis([0,8,0,5])
@@ -418,8 +416,6 @@ for i in range(len(x)):
         y[i] = max(x[i-1], x[i])   # x[len(x)] does not exist in the vector
     else:
         y[i] = max(x[i-1], x[i], x[i+1])
-print 'x = ',x
-print ('y = ['+', '.join(['%.2f']*len(y))%tuple(y)+']')
 plt.figure(figsize=(10,4));
 plt.subplot(2,1,1); plt.stem(x); plt.title ('Input $x[n]$'); plt.axis([0,8,0,5])
 plt.subplot(2,1,2); plt.stem(y); plt.title ('Output $y[n]$'); plt.axis([0,8,0,5])
@@ -440,8 +436,6 @@ import matplotlib.pyplot as plt, numpy as np
 x = [0, 1, 2, 3, 4, 4, 4, 4, 4]
 for i in range(len(x)):
     y[i] = sum(x[0:(i+1)])
-print 'x = ',x
-print ('y = ['+', '.join(['%.2f']*len(y))%tuple(y)+']')
 plt.figure(figsize=(10,5));
 plt.subplot(2,1,1); plt.stem(x); plt.title ('Input $x[n]$'); plt.axis([0,8,0,5])
 plt.subplot(2,1,2); plt.stem(y); plt.title ('Output $y[n]$'); plt.axis([0,8,0,30])
@@ -567,8 +561,6 @@ xd = [0, 0, 0, 0, 0, 1, 2, 3, 4, 4, 4, 4, 4]
 def H(n,x):
   y = [n[i] * x[i] for i in range(len(x))]
   return y
-print 'H[x[n]] = ',H(n,x)
-print 'H[x[n-4]] = ',H(n,xd)
 plt.figure(figsize=(10,5));
 plt.subplot(2,2,1); plt.stem(n,x); plt.title ('Input $x[n]$'); plt.axis([0,13,0,5])
 plt.subplot(2,2,2); plt.stem(n,H(n,x)); plt.title ('Output $H[x[n]]$'); plt.axis([0,13,0,50])
