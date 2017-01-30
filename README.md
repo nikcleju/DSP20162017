@@ -1,6 +1,7 @@
 # Digital Signal Processing 2016 - 2017
 
-Here you will find all the lectures for the class of Digital Signal Processing which I will be teaching throughout this year.
+Here you will find all the lectures for the class of Digital Signal Processing which I'm teaching in 2016-2017
+autumn semester.
 
 **Preparation for exam** (including theory subjects): see [here](PreparationForExam.pdf)
 
